@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Page Not Found - {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: var(--space-6); margin-bottom: var(--space-6);">
+    <div class="card" style="text-align: center; padding: var(--space-6); max-width: 600px; margin: 0 auto;">
+        <div style="font-size: 120px; font-weight: 900; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: var(--space-3);">
+            404
+        </div>
+        
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2);">
+            Page Not Found
+        </h1>
+        
+        <p style="font-size: 16px; color: var(--text-secondary); margin-bottom: var(--space-4); line-height: 1.6;">
+            Oops! The page you're looking for doesn't exist. It might have been moved or deleted.
+        </p>
+        
+        <div style="display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap;">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">
+                <i class="fa-solid fa-home"></i>
+                Go Home
+            </a>
+            <a href="{{ url_for('clubs_list') }}" class="btn">
+                <i class="fa-solid fa-users"></i>
+                Browse Clubs
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

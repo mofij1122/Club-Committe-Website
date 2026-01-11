@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="hero-subtitle">Welcome to</div>
+        <h1 class="hero-title">SGM Clubs & Committees</h1>
+        <p class="hero-description">
+            Discover your passion, connect with like-minded peers, and make your college experience unforgettable. 
+            Join our vibrant community of clubs and committees today!
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('clubs_list') }}" class="btn btn-primary">
+                <i class="fa-solid fa-users"></i>
+                Explore Clubs
+            </a>
+            <a href="{{ url_for('events_list') }}" class="btn">
+                <i class="fa-solid fa-calendar"></i>
+                View Events
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="container">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Active Clubs</div>
+            <div class="stat-value">{{ stats.total_clubs }}</div>
+            <div class="stat-change positive">
+                <i class="fa-solid fa-arrow-up"></i> Growing community
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-label">Total Members</div>
+            <div class="stat-value">{{ stats.total_members }}+</div>
+            <div class="stat-change positive">
+                <i class="fa-solid fa-users"></i> Active students
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-label">Upcoming Events</div>
+            <div class="stat-value">{{ stats.upcoming_events }}</div>
+            <div class="stat-change">
+                <i class="fa-solid fa-calendar-check"></i> This semester
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Clubs Section -->
+<div class="container">
+    <div class="dashboard-header">
+        <h2 class="dashboard-title">Featured Clubs</h2>
+        <p class="dashboard-subtitle">Explore our diverse range of student organizations</p>
+    </div>
+    
+    <div class="features-grid">
+        {% for club in clubs[:6] %}
+        <div class="card feature-card">
+            <div class="feature-icon">
+                <i class="fa-solid fa-users-line"></i>
+            </div>
+            <h3 class="feature-title">{{ club.name }}</h3>
+            <p class="feature-description">{{ club.description }}</p>
+            <div style="margin-top: var(--space-2); display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: var(--text-secondary);">
+                <span>
+                    <i class="fa-solid fa-user-group"></i> 
+                    {{ club.actual_member_count or club.member_count }} members
+                </span>
+                <span style="color: var(--accent-primary); font-weight: 600;">{{ club.category }}</span>
+            </div>
+            <a href="{{ url_for('club_detail', club_id=club.id) }}" class="btn btn-primary" style="width: 100%; margin-top: var(--space-2);">
+                View Details
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if clubs|length > 6 %}
+    <div style="text-align: center; margin-top: var(--space-4);">
+        <a href="{{ url_for('clubs_list') }}" class="btn btn-primary">
+            View All Clubs
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Why Join Section -->
+<div class="container" style="margin-top: var(--space-6);">
+    <div class="dashboard-header">
+        <h2 class="dashboard-title">Why Join a Club?</h2>
+        <p class="dashboard-subtitle">Benefits of being part of our community</p>
+    </div>
+    
+    <div class="features-grid">
+        <div class="card">
+            <div class="feature-icon" style="margin: 0 auto var(--space-2); width: 60px; height: 60px;">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: var(--space-1); text-align: center;">Skill Development</h3>
+            <p style="font-size: 14px; color: var(--text-secondary); text-align: center;">
+                Learn new skills, gain practical experience, and enhance your resume with hands-on projects
+            </p>
+        </div>
+        
+        <div class="card">
+            <div class="feature-icon" style="margin: 0 auto var(--space-2); width: 60px; height: 60px;">
+                <i class="fa-solid fa-handshake"></i>
+            </div>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: var(--space-1); text-align: center;">Networking</h3>
+            <p style="font-size: 14px; color: var(--text-secondary); text-align: center;">
+                Connect with peers, seniors, alumni, and industry professionals who share your interests
+            </p>
+        </div>
+        
+        <div class="card">
+            <div class="feature-icon" style="margin: 0 auto var(--space-2); width: 60px; height: 60px;">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: var(--space-1); text-align: center;">Leadership</h3>
+            <p style="font-size: 14px; color: var(--text-secondary); text-align: center;">
+                Take on leadership roles, organize events, and develop essential management skills
+            </p>
+        </div>
+        
+        <div class="card">
+            <div class="feature-icon" style="margin: 0 auto var(--space-2); width: 60px; height: 60px;">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: var(--space-1); text-align: center;">Passion</h3>
+            <p style="font-size: 14px; color: var(--text-secondary); text-align: center;">
+                Pursue your interests, explore new hobbies, and find your true calling in college
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

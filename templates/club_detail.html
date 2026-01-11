@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}{{ club.name }} - {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: var(--space-4);">
+    <!-- Club Header -->
+    <div class="card" style="margin-bottom: var(--space-4);">
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: start;">
+            <div class="feature-icon" style="width: 80px; height: 80px; font-size: 36px; flex-shrink: 0;">
+                <i class="fa-solid fa-users-line"></i>
+            </div>
+            
+            <div style="flex: 1; min-width: 250px;">
+                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1);">
+                    <h1 class="dashboard-title" style="margin: 0;">{{ club.name }}</h1>
+                    <span style="font-size: 12px; font-weight: 600; color: var(--accent-primary); background: rgba(99, 102, 241, 0.1); padding: 4px 12px; border-radius: var(--radius-md);">
+                        {{ club.category }}
+                    </span>
+                </div>
+                <p style="font-size: 16px; color: var(--text-secondary); margin-bottom: var(--space-2);">
+                    {{ club.description }}
+                </p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-3);">
+                    <span>
+                        <i class="fa-solid fa-user-tie"></i> 
+                        <strong>President:</strong> {{ club.president_name }}
+                    </span>
+                    <span>
+                        <i class="fa-solid fa-users"></i> 
+                        <strong>{{ members|length }}</strong> members
+                    </span>
+                    {% if club.founded_year %}
+                    <span>
+                        <i class="fa-solid fa-calendar"></i> 
+                        Founded in {{ club.founded_year }}
+                    </span>
+                    {% endif %}
+                </div>
+                
+                <a href="{{ url_for('join_club', club_id=club.id) }}" class="btn btn-primary">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Join This Club
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Section -->
+    <div class="card" style="margin-bottom: var(--space-4);">
+        <div class="card-header">
+            <h2 class="card-title">
+                <i class="fa-solid fa-circle-info"></i>
+                About Us
+            </h2>
+        </div>
+        <div class="card-body">
+            <p style="line-height: 1.8; color: var(--text-secondary);">
+                {{ club.full_description }}
+            </p>
+        </div>
+    </div>
+    
+    <!-- Meeting Details -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        {% if club.meeting_time %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fa-solid fa-clock"></i>
+                    Meeting Schedule
+                </h3>
+            </div>
+            <div class="card-body">
+                <p style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
+                    {{ club.meeting_time }}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if club.meeting_location %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Meeting Location
+                </h3>
+            </div>
+            <div class="card-body">
+                <p style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
+                    {{ club.meeting_location }}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fa-solid fa-envelope"></i>
+                    Contact
+                </h3>
+            </div>
+            <div class="card-body">
+                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-1);">
+                    <i class="fa-solid fa-envelope"></i> {{ club.contact_email }}
+                </p>
+                {% if club.contact_phone %}
+                <p style="font-size: 14px; color: var(--text-secondary);">
+                    <i class="fa-solid fa-phone"></i> {{ club.contact_phone }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Members Section -->
+    {% if members %}
+    <div class="card" style="margin-bottom: var(--space-4);">
+        <div class="card-header">
+            <h2 class="card-title">
+                <i class="fa-solid fa-users"></i>
+                Club Members
+            </h2>
+            <span style="font-size: 14px; color: var(--text-secondary);">{{ members|length }} active members</span>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--space-3);">
+                {% for member in members %}
+                <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: var(--space-2); display: flex; align-items: center; gap: var(--space-2); transition: all var(--transition-normal);">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; flex-shrink: 0;">
+                        {{ member.name[0] }}
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            {{ member.name }}
+                        </div>
+                        <div style="font-size: 12px; color: var(--accent-primary); font-weight: 600;">
+                            {{ member.role }}
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">
+                            {{ member.year }} • {{ member.department }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Upcoming Events -->
+    {% if events %}
+    <div class="card" style="margin-bottom: var(--space-4);">
+        <div class="card-header">
+            <h2 class="card-title">
+                <i class="fa-solid fa-calendar-days"></i>
+                Upcoming Events
+            </h2>
+        </div>
+        <div class="card-body">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                {% for event in events %}
+                <div style="background: var(--bg-primary); border-left: 3px solid var(--accent-primary); border-radius: var(--radius-md); padding: var(--space-2); transition: all var(--transition-normal);">
+                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-1);">
+                        {{ event.title }}
+                    </h4>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-1);">
+                        {{ event.description }}
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); font-size: 13px; color: var(--text-muted);">
+                        <span>
+                            <i class="fa-solid fa-calendar"></i> 
+                            {{ event.event_date }}
+                        </span>
+                        {% if event.event_time %}
+                        <span>
+                            <i class="fa-solid fa-clock"></i> 
+                            {{ event.event_time }}
+                        </span>
+                        {% endif %}
+                        {% if event.location %}
+                        <span>
+                            <i class="fa-solid fa-location-dot"></i> 
+                            {{ event.location }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Gallery Section -->
+    {% if gallery %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">
+                <i class="fa-solid fa-images"></i>
+                Event Gallery
+            </h2>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-2);">
+                {% for photo in gallery %}
+                <div style="aspect-ratio: 1; background: var(--bg-primary); border-radius: var(--radius-md); overflow: hidden; position: relative;">
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
+                        <i class="fa-solid fa-image" style="font-size: 48px;"></i>
+                    </div>
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); padding: var(--space-2); color: white; font-size: 12px;">
+                        {{ photo.event_title }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

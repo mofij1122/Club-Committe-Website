@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Request Submitted - {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: var(--space-6); margin-bottom: var(--space-6);">
+    <div class="card" style="text-align: center; padding: var(--space-6); max-width: 600px; margin: 0 auto;">
+        <!-- Success Icon with Animation -->
+        <div style="width: 120px; height: 120px; margin: 0 auto var(--space-4); background: linear-gradient(135deg, var(--accent-success), #34d399); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: successPulse 1s ease;">
+            <i class="fa-solid fa-check" style="font-size: 64px; color: white;"></i>
+        </div>
+        
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2);">
+            Request Submitted! 🎉
+        </h1>
+        
+        <p style="font-size: 18px; color: var(--accent-success); font-weight: 600; margin-bottom: var(--space-3);">
+            You've successfully requested to join
+        </p>
+        
+        <div style="background: var(--bg-primary); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+            <div class="feature-icon" style="width: 60px; height: 60px; font-size: 28px; margin: 0 auto var(--space-2);">
+                <i class="fa-solid fa-users-line"></i>
+            </div>
+            <h2 style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-1);">
+                {{ club.name }}
+            </h2>
+            <p style="font-size: 14px; color: var(--text-secondary);">
+                {{ club.category }}
+            </p>
+        </div>
+        
+        <!-- What Happens Next -->
+        <div style="background: rgba(99, 102, 241, 0.1); border-left: 3px solid var(--accent-primary); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-4); text-align: left;">
+            <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2);">
+                <i class="fa-solid fa-info-circle"></i> What Happens Next?
+            </h3>
+            <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: var(--space-3);">
+                <li>Your request is currently <strong style="color: var(--accent-warning);">pending</strong></li>
+                <li>The club president will review your application</li>
+                <li>You'll receive an email confirmation</li>
+                <li>Approval typically takes 2-3 business days</li>
+            </ul>
+        </div>
+        
+        <!-- Status Badge -->
+        <div style="display: inline-flex; align-items: center; gap: var(--space-1); background: rgba(245, 158, 11, 0.1); color: var(--accent-warning); padding: var(--space-1) var(--space-3); border-radius: 999px; font-weight: 600; font-size: 14px; margin-bottom: var(--space-4);">
+            <i class="fa-solid fa-clock"></i>
+            Status: Pending Review
+        </div>
+        
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap;">
+            <a href="{{ url_for('club_detail', club_id=club.id) }}" class="btn btn-primary">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Club Details
+            </a>
+            <a href="{{ url_for('clubs_list') }}" class="btn">
+                <i class="fa-solid fa-users"></i>
+                Browse More Clubs
+            </a>
+            <a href="{{ url_for('index') }}" class="btn">
+                <i class="fa-solid fa-home"></i>
+                Go Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes successPulse {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+</style>
+{% endblock %}

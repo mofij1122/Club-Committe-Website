@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Upcoming Events - {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: var(--space-4);">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">
+            <i class="fa-solid fa-calendar-days"></i>
+            Upcoming Events
+        </h1>
+        <p class="dashboard-subtitle">Don't miss out on exciting club activities and events</p>
+    </div>
+    
+    {% if events %}
+    <div style="display: grid; gap: var(--space-3);">
+        {% for event in events %}
+        <div class="card" style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <!-- Date Badge -->
+            <div style="flex-shrink: 0; width: 100px; height: 100px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: var(--radius-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center;">
+                {% if event.event_date %}
+                    {% set date_parts = event.event_date.split('-') %}
+                    <div style="font-size: 32px; font-weight: 800; line-height: 1;">
+                        {{ date_parts[2] if date_parts|length == 3 else 'TBA' }}
+                    </div>
+                    <div style="font-size: 14px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">
+                        {% if date_parts|length == 3 %}
+                            {% set months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] %}
+                            {{ months[date_parts[1]|int] }}
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div style="font-size: 24px; font-weight: 700;">TBA</div>
+                {% endif %}
+            </div>
+            
+            <!-- Event Details -->
+            <div style="flex: 1; min-width: 250px;">
+                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1); flex-wrap: wrap;">
+                    <h3 style="font-size: 22px; font-weight: 700; color: var(--text-primary); margin: 0;">
+                        {{ event.title }}
+                    </h3>
+                    <span style="font-size: 12px; font-weight: 600; color: var(--accent-primary); background: rgba(99, 102, 241, 0.1); padding: 4px 12px; border-radius: var(--radius-md);">
+                        {{ event.category }}
+                    </span>
+                </div>
+                
+                <div style="font-size: 14px; font-weight: 600; color: var(--accent-secondary); margin-bottom: var(--space-2);">
+                    <i class="fa-solid fa-users"></i> {{ event.club_name }}
+                </div>
+                
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-2); line-height: 1.6;">
+                    {{ event.description }}
+                </p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); font-size: 14px; color: var(--text-muted);">
+                    {% if event.event_date %}
+                    <span>
+                        <i class="fa-solid fa-calendar"></i> 
+                        {{ event.event_date }}
+                    </span>
+                    {% endif %}
+                    {% if event.event_time %}
+                    <span>
+                        <i class="fa-solid fa-clock"></i> 
+                        {{ event.event_time }}
+                    </span>
+                    {% endif %}
+                    {% if event.location %}
+                    <span>
+                        <i class="fa-solid fa-location-dot"></i> 
+                        {{ event.location }}
+                    </span>
+                    {% endif %}
+                </div>
+                
+                <div style="margin-top: var(--space-2);">
+                    <a href="{{ url_for('club_detail', club_id=event.club_id) }}" class="btn btn-primary">
+                        View Club Details
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card" style="text-align: center; padding: var(--space-6);">
+        <i class="fa-solid fa-calendar-xmark" style="font-size: 64px; color: var(--text-muted); margin-bottom: var(--space-3);"></i>
+        <h3 style="font-size: 24px; font-weight: 700; margin-bottom: var(--space-1);">No Upcoming Events</h3>
+        <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+            Check back soon for exciting club activities and events!
+        </p>
+        <a href="{{ url_for('clubs_list') }}" class="btn btn-primary">
+            <i class="fa-solid fa-users"></i>
+            Explore Clubs
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Join Form Test</title>
+</head>
+<body style="background: #1a1f2e; color: white; padding: 50px; font-family: Arial;">
+    <h1>🎉 Join Form Works!</h1>
+    <p>Club ID: {{ club.id }}</p>
+    <p>Club Name: {{ club.name }}</p>
+    
+    <form method="POST" style="margin-top: 30px;">
+        <div style="margin-bottom: 15px;">
+            <label>Name:</label><br>
+            <input type="text" name="student_name" required style="padding: 10px; width: 300px;">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label>Email:</label><br>
+            <input type="email" name="email" required style="padding: 10px; width: 300px;">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label>Year:</label><br>
+            <select name="year" required style="padding: 10px; width: 320px;">
+                <option value="">Select</option>
+                <option value="First Year">First Year</option>
+                <option value="Second Year">Second Year</option>
+                <option value="Third Year">Third Year</option>
+                <option value="Final Year">Final Year</option>
+            </select>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label>Department:</label><br>
+            <input type="text" name="department" required style="padding: 10px; width: 300px;">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label>Phone:</label><br>
+            <input type="tel" name="phone" style="padding: 10px; width: 300px;">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label>Why join?:</label><br>
+            <textarea name="reason" style="padding: 10px; width: 300px; height: 100px;"></textarea>
+        </div>
+        
+        <button type="submit" style="padding: 15px 30px; background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
+            Submit Request
+        </button>
+        
+        <a href="/club/{{ club.id }}" style="display: inline-block; padding: 15px 30px; background: #374151; color: white; text-decoration: none; border-radius: 8px; margin-left: 10px;">
+            Back to Club
+        </a>
+    </form>
+</body>
+</html>

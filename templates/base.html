@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Topbar Navigation -->
+    <nav class="topbar">
+        <div class="topbar-inner">
+            <a href="{{ url_for('index') }}" class="brand">
+                <span class="brand-dot"></span>
+                {{ app_name }}
+            </a>
+            
+            <div class="nav">
+                <a href="{{ url_for('index') }}" class="nav-link">
+                    <i class="fa-solid fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="{{ url_for('clubs_list') }}" class="nav-link">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Clubs</span>
+                </a>
+                <a href="{{ url_for('events_list') }}" class="nav-link">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Events</span>
+                </a>
+                <a href="{{ url_for('gallery') }}" class="nav-link">
+                    <i class="fa-solid fa-images"></i>
+                    <span>Gallery</span>
+                </a>
+            </div>
+            
+            <div class="topbar-actions">
+                <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container" style="margin-top: 20px;">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--space-4) 0; margin-top: var(--space-6); text-align: center; color: var(--text-secondary);">
+        <div class="container">
+            <p>&copy; 2026 {{ app_name }}. All rights reserved.</p>
+            <p style="font-size: 14px; margin-top: var(--space-1);">
+                Made with <i class="fa-solid fa-heart" style="color: var(--accent-danger);"></i> by Mofij Khan
+            </p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
