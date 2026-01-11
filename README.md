@@ -1,3 +1,5 @@
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 # Club & Committe Website 🌐🎓
 
 A Flask-based web platform designed to manage college clubs and events.  
